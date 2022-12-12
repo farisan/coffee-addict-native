@@ -74,7 +74,7 @@ const ProductDetail = ({navigation, route}) => {
             Delivered only on monday until friday from 1 pm to 7 pm
           </Text>
         </View>
-        <View style={styles.text_bar}>
+        <View style={styles.text_bar1}>
           <Text style={styles.title_info}>Description</Text>
           <Text style={styles.desc_text}>
             {product.description}
