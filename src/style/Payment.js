@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         paddingHorizontal: 20,
-        // alignItems: 'center',
+        paddingTop:40,
     },
     products: {
         paddingTop: 50,
@@ -118,6 +118,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 20,
+    },
+    total1: {
+        paddingTop: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
+        paddingBottom:25,
     },
     image_payment: {
         width:60,

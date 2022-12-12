@@ -1,7 +1,6 @@
-import {View, Text, Image, ScrollView} from 'react-native';
+import {View, Text, Image, ScrollView, ToastAndroid} from 'react-native';
 import React, {useState} from 'react';
 import styles from '../style/Payment';
-import img_hazzelnut from '../assets/payment/img_hazzelnut.png';
 import Card from 'react-native-vector-icons/FontAwesome';
 import Bank from 'react-native-vector-icons/FontAwesome';
 import Deleivery from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -37,7 +36,12 @@ const Payment = ({navigation}) => {
         total: product.total,
         status: "success"
       })
-      console.log(response.data)
+      // console.log(response.data.data)
+      ToastAndroid.showWithGravity(
+        "Order Success",
+        ToastAndroid.LONG,
+        ToastAndroid.TOP,
+        )
       navigation.push('Home')
     } catch (error) {
       console.log(error)
@@ -139,7 +143,7 @@ const Payment = ({navigation}) => {
               <Text style={styles.text_total}>Shipping</Text>
               <Text style={styles.text_price}>{(product.delivery === 1) ? costing(5000) : 0}</Text>
             </View>
-            <View style={styles.total}>
+            <View style={styles.total1}>
               <Text style={styles.text_total}>Total</Text>
               <Text style={styles.text_price}>{costing(product.total)}</Text>
             </View>
