@@ -61,13 +61,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 21,
     height: 21,
-    backgroundColor: 'rgba(231, 170, 54, 0.52)',
+    backgroundColor: "black",
     borderRadius: 100,
   },
   down: {
     fontWeight: '900',
     fontSize: 15,
-    color: 'black',
+    color: 'white',
   },
   number: {
     fontFamily: 'Poppins',
@@ -83,13 +83,14 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     width: 21,
     height: 21,
-    backgroundColor: 'rgba(231, 170, 54, 0.52)',
+    backgroundColor: 'black',
+    opacity:20,
     borderRadius: 100,
   },
   up: {
     fontWeight: '900',
     fontSize: 15,
-    color: 'black',
+    color: 'white',
   },
   content_line: {
     display: 'flex',
@@ -174,12 +175,17 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     fontFamily: 'Poppins',
     color: '#6A4029',
+    marginTop:40,
+    marginBottom:30
   },
   cupon_container: {
     marginTop: 10,
     justifyContent:'center',
     flexDirection:'row'
   },
+  content_btn_bottom: {
+    height:40
+  }
 });
 
 export default styles;

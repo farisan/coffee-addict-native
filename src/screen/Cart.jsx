@@ -114,6 +114,7 @@ const Cart = ({navigation}) => {
             {costing(product.price * quantity + (product.price * 10) / 100)}
           </Text>
         </View>
+        <View style={styles.content_btn_bottom}></View>
         <View
           style={styles.btn_navigate}
           onStartShouldSetResponder={handleRedux}>
