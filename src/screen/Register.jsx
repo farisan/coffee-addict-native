@@ -71,29 +71,29 @@ const Register = ({navigation}) => {
           placeholderTextColor="#9F9F9F"
         />
         <TextInput
-          style={styles.input}
+          style={styles.input1}
           placeholder="Enter your phone number"
           keyboardType="numeric"
           onChangeText={valuePhone}
           placeholderTextColor="#9F9F9F"
         />
-        <ButtonOpacity
-          color={'#6a4029'}
-          text="Create New Account"
-          radius={20}
-          colorText="white"
-          height={60}
-          width={`90%`}
-          marginBottom={20}
-          marginTop={20}
-          // onPress={postRegister}
-          onPressHandler={{
-            onPress: handleRegister,
-            // onPressIn: () => console.log('Pressed In'),
-            // onPressOut: () => console.log('Pressed Out'),
-            // onLongPress: () => navigation.popToTop(),
-          }}
-        />
+          <ButtonOpacity
+            color={'#6a4029'}
+            text="Create New Account"
+            radius={20}
+            colorText="white"
+            height={60}
+            width={`90%`}
+            marginBottom={20}
+            marginTop={20}
+            // onPress={postRegister}
+            onPressHandler={{
+              onPress: handleRegister,
+              // onPressIn: () => console.log('Pressed In'),
+              // onPressOut: () => console.log('Pressed Out'),
+              // onLongPress: () => navigation.popToTop(),
+            }}
+          />
       </View>
     </ScrollView>
   );
@@ -104,8 +104,7 @@ export default Register;
 const styles = StyleSheet.create({
   content_all: {
     alignItems: 'center',
-    // flex: 1,
-    // paddingHorizontal: 40,
+    paddingHorizontal: 20,
     justifyContent: 'center',
     paddingTop: 50,
   },
@@ -115,6 +114,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderBottomWidth: 1,
+    borderColor:`#9F9F9F`,
     borderWidth: 0,
     fontFamily: 'Poppins',
     fontSize: 14,
@@ -123,6 +123,20 @@ const styles = StyleSheet.create({
     outlineWidth: 4,
     padding: 10,
     width: `90%`,
-    color: "black"
+    color: 'black',
+  },
+  input1: {
+    borderBottomWidth: 1,
+    borderColor:`#9F9F9F`,
+    borderWidth: 0,
+    fontFamily: 'Poppins',
+    fontSize: 14,
+    height: 40,
+    margin: 12,
+    outlineWidth: 4,
+    padding: 10,
+    width: `90%`,
+    color: 'black',
+    marginBottom:90
   },
 });
