@@ -4,13 +4,13 @@ const styles = StyleSheet.create({
     content_all: {
         alignItems: 'center',
         // flex: 1,
-        // paddingHorizontal: 40,
+        paddingHorizontal: 20,
         justifyContent: 'center',
         paddingTop: 50,
     },
     image: {
         marginHorizontal: 20,
-        marginVertical: 20,
+        marginVertical: 40,
     },
     title_user: {
         color: `black`,

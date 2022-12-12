@@ -4,7 +4,8 @@ const styles = StyleSheet.create({
     content_all: {
         alignItems: 'center',
         flex: 1,
-        // paddingHorizontal: 40,
+        paddingVertical:45,
+        paddingHorizontal:20,
         justifyContent: 'center',
     },
     content_google: {
@@ -37,9 +38,9 @@ const styles = StyleSheet.create({
         width: `90%`,
     },
     icon_google: {
-        left: 70,
+        left: 50,
         position: 'absolute',
-        top: 40,
+        top: 38,
         zIndex: 1,
     },
     icon_login: {
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
         color: `#9A9A9D`,
         fontFamily: 'Poppins',
         fontSize: 14,
-        paddingHorizontal: 12,
+        paddingHorizontal: 30,
     },
 });
 

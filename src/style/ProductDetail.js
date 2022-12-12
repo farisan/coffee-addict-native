@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {
-  horizontalScale,
+  // horizontalScale,
   verticalScale,
   moderateScale,
 } from '../helpers/Metrics';
@@ -10,10 +10,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     width: '100%',
+    marginTop:10,
+    paddingHorizontal:20,
+    
   },
   deliver_desc: {
-    color: '#000',
+    color: 'black',
     fontFamily: 'Poppins',
+    fontWeight: '400',
     fontSize: moderateScale(15),
     opacity: 0.5,
   },
@@ -23,8 +27,8 @@ const styles = StyleSheet.create({
   },
   img_product: {
     borderRadius: 200,
-    width:200,
-    height:200,
+    width:180,
+    height:180,
   },
   name_product: {
     color: '#000',
@@ -35,10 +39,15 @@ const styles = StyleSheet.create({
   price: {
     color: '#6A4029',
     fontFamily: 'Poppins',
-    fontSize: moderateScale(22),
     fontWeight: '700',
+    fontSize: moderateScale(22),
   },
   text_bar: {
+    marginBottom: verticalScale(30),
+    width: '90%',
+    marginTop:30,
+  },
+  text_bar1: {
     marginBottom: verticalScale(30),
     width: '90%',
   },
@@ -50,7 +59,12 @@ const styles = StyleSheet.create({
     marginBottom: verticalScale(5),
   },
   desc_text: {
-    color:'black'
+    color:'black',
+    fontFamily: 'Poppins',
+    fontWeight: '400',
+    fontSize: moderateScale(15),
+    opacity: 0.5,
+    height:135,
   }
 });
 
