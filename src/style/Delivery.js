@@ -36,17 +36,19 @@ const styles = StyleSheet.create({
     fontFamily: `Poppins`,
     fontSize: 17,
     fontWeight: '500',
+    marginBottom:10,
+  },
+  rule: {
     borderBottomColor: 'black',
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 1,
+    width:`100%`
   },
   detail_address_text: {
     color: `black`,
     fontFamily: `Poppins`,
     fontSize: 15,
     fontWeight: '400',
-    borderBottomColor: 'black',
-    borderBottomWidth: 0.5,
-    marginTop: 10,
+    marginVertical:10,
   },
   address_main_container: {
     backgroundColor: 'white',
@@ -58,14 +60,14 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingLeft: 20,
     paddingRight: 20,
-    width: '75%',
+    width: '100%',
   },
   number_text: {
     color: `black`,
     fontFamily: `Poppins`,
     fontSize: 15,
     fontWeight: '400',
-    marginTop: 10,
+    marginTop:10,
   },
   delivery_method_text: {
     color: `black`,
@@ -97,8 +99,15 @@ const styles = StyleSheet.create({
   price_container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: '10%',
-    marginBottom: '5%',
+    marginTop: 40,
+    paddingHorizontal:10,
+  },
+  price_container1: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    marginBottom: 20,
+    paddingHorizontal:10,
   },
   delivery_method_container: {
     marginTop: '10%',
@@ -109,9 +118,9 @@ const styles = StyleSheet.create({
   },
   border_bottom: {
     borderColor: 'black',
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 1,
     marginLeft: 10,
-    width: '80%',
+    width: '90%',
   },
   margin_dine: {
     marginLeft: 10,

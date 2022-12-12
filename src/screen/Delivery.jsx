@@ -58,15 +58,17 @@ function Delivery({navigation}) {
               change
             </Text>
           </View>
+
           <View style={styles.address_main_container}>
             <View style={styles.address_main_box}>
               <Text style={styles.main_address_text}>{`Delivery : ${profile.displayname}`}</Text>
-              <Text style={styles.detail_address_text}>
-                {profile.address}
-              </Text>
+              <View style={styles.rule}></View>
+              <Text style={styles.detail_address_text}>{profile.address}</Text>
+              <View style={styles.rule}></View>
               <Text style={styles.number_text}>{profile.phone_number}</Text>
             </View>
           </View>
+
           <View style={styles.delivery_method_container}>
             <Text style={styles.delivery_method_text}>Delivery methods</Text>
           </View>
@@ -106,7 +108,7 @@ function Delivery({navigation}) {
             <Text style={styles.total_text}>Delivery</Text>
             <Text style={styles.price_text}>{(value === "1") ? costing(5000) : 0 }</Text>
           </View>
-          <View style={styles.price_container}>
+          <View style={styles.price_container1}>
             <Text style={styles.total_text}>Total</Text>
             <Text style={styles.price_text}>{costing(product.total + handleValue() )}</Text>
           </View>
