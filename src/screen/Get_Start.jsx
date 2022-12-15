@@ -4,7 +4,10 @@ import React from 'react';
 import icon_girl from '../assets/get_start/icon_girl.png';
 import ButtonOpacity from '../components/ButtonOpacity';
 
+
 const Get_Start = ({navigation}) => {
+
+
   return (
     <ScrollView>
       <View style={styles.content_all}>

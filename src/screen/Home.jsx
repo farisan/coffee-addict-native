@@ -6,10 +6,14 @@ import styles from '../style/Home';
 import search_icon from '../assets/header/search.png';
 import CardProduct from '../components/CardProduct';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import authAction from '../redux/actions/auth';
 
 const Home = ({navigation}) => {
+
+  const dispatch = useDispatch()
   const [search, setSearch] = useState('');
-  const [navFav, setNavFav] = useState(true);
+  const [navFav, setNavFav] = useState(false);
   const [navCoff, setNavCoff] = useState(true);
   const [navNonCoff, setNavNonCoff] = useState(true);
   const [navFood, setFood] = useState(true);
@@ -89,9 +93,32 @@ const Home = ({navigation}) => {
       });
   }, [category, search]);
 
-  // console.log(search)
-  // console.log(category)
-  // console.log(notfound)
+
+  const resetReduxTransactions = () => {
+    dispatch(
+      authAction.productThunk(
+        {
+          id_product: null,
+          price: 0,
+          name_product: null,
+          status: null,
+          delivery: null,
+          total: 0,
+          image: null,
+          qty: 0,
+          payment_method: null,
+          size: null,
+          id_promo: null
+        },
+      ),
+    );
+  };
+
+  useEffect(() => {
+    resetReduxTransactions()
+  },[])
+
+
   return (
     <ScrollView>
       <View style={styles.home_background}>

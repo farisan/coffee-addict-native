@@ -46,6 +46,7 @@ const Login = () => {
       ))
     })
     .catch((err) => {
+      console.log(err)
       ToastAndroid.showWithGravity(
         err.response.data.msg.msg,
         ToastAndroid.LONG,

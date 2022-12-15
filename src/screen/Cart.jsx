@@ -10,7 +10,7 @@ import {useNavigation} from '@react-navigation/native';
 const Cart = ({navigation}) => {
   const dispatch = useDispatch();
   const product = useSelector(state => state.auth.product);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(product.qty);
   const navigate = useNavigation();
 
   const costing = price => {
@@ -53,6 +53,29 @@ const Cart = ({navigation}) => {
     );
   };
 
+  const handleReduxCupon = () => {
+    dispatch(
+      authAction.productThunk(
+        {
+          id_product: product.id_product,
+          price: product.price,
+          name_product: product.name_product,
+          status: null,
+          delivery: null,
+          total: 0,
+          image: product.image,
+          qty: quantity,
+          payment_method: null,
+          size: product.size,
+          id_promo: product.id_promo,
+        },
+        () => {
+          navigation.navigate('Cupon');
+        },
+      ),
+    );
+  };
+
   return (
     <ScrollView>
       <View style={styles.content_all}>
@@ -81,7 +104,7 @@ const Cart = ({navigation}) => {
             onPress={() => {
               navigate.push('Cupon');
             }}>
-            <View style={styles.btn_navigateSec}>
+            <View style={styles.btn_navigateSec} onStartShouldSetResponder={handleReduxCupon}>
               <Text style={styles.text_btn}>Apply Delivery Coupons</Text>
               <ArrowRightSec
                 color="#6A4029"

@@ -25,7 +25,7 @@ import Payment from './src/screen/Payment';
 import Cupon from './src/screen/Cupon';
 
 // import icon dari modole
-import { StyleSheet } from 'react-native';
+// import { StyleSheet } from 'react-native';
 // import Icon from 'react-native-vector-icons/Feather';
 import Cart from 'react-native-vector-icons/Feather';
 import ButtonLeft from 'react-native-vector-icons/Feather';
@@ -212,7 +212,7 @@ function App({ navigation }) {
               headerRight: () => (
                 <>
                   <Cart
-                    style={styles.cart}
+                    // style={styles.cart}
                     color="#000"
                     brand={'Feather'}
                     name="shopping-cart"
@@ -336,11 +336,3 @@ function App({ navigation }) {
 
 export default App;
 
-const styles = StyleSheet.create({
-  // btn_left: {
-  //   color: '#6A4029',
-  // },
-  // cart: {
-  //   marginRight: 20,
-  // },
-});

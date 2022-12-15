@@ -20,6 +20,7 @@ const History = ({navigation}) => {
   const [notfound, setNotfound] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [historyId, setHistoryId] = useState('');
+  const [deps, setDeps] = useState("")
 
   const getDataHistory = async () => {
     try {
@@ -36,7 +37,7 @@ const History = ({navigation}) => {
   useEffect(() => {
     getDataHistory();
     console.log(history.image);
-  }, [history]);
+  }, [deps]);
 
   const deleteHistory = async () => {
     try {
@@ -48,6 +49,7 @@ const History = ({navigation}) => {
         ToastAndroid.LONG,
         ToastAndroid.TOP,
       ),
+      setDeps(Math.floor(Math.random() * 10) + 1)
       setShowModal(false);
     } catch (error) {
       console.log(error)
