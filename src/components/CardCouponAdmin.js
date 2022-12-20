@@ -1,29 +1,15 @@
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import authAction from '../redux/actions/auth';
 import {useNavigation} from '@react-navigation/native';
 
 const CardCupon = props => {
   const navigation = useNavigation();
-  const product = useSelector(state => state.auth.product);
-  const dispatch = useDispatch();
 
-  const handleRedux = () => {
-    return dispatch(
-      authAction.productThunk(
-        {
-          price: product.price - (product.price * props.discount) / 100,
-          id_promo: props.promo,
-        },
-        () => {
-          navigation.navigate('Cart');
-        },
-      ),
-    );
-  };
   return (
-    <TouchableOpacity onPress={() => handleRedux()}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('Edit_Promo_Admin', {id_promo: props.id})
+      }>
       <View
         style={{
           marginTop: 20,
