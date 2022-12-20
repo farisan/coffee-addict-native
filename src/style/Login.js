@@ -4,7 +4,8 @@ const styles = StyleSheet.create({
     content_all: {
         alignItems: 'center',
         flex: 1,
-        paddingVertical:45,
+        paddingTop:45,
+        paddingBottom:10,
         paddingHorizontal:20,
         justifyContent: 'center',
     },

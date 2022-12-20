@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
   content_all: {
-    marginTop: 50,
+    marginTop: 30,
     marginLeft: '10%',
     width: `80%`,
   },
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     marginBottom:10,
   },
   rule: {
-    borderBottomColor: 'black',
+    borderBottomColor: '#CACACA',
     borderBottomWidth: 1,
     width:`100%`
   },
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   price_text: {
     color: `black`,
     fontFamily: `Poppins`,
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: '700',
   },
   price_container: {
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   price_container1: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
+    marginTop: 15,
     marginBottom: 20,
     paddingHorizontal:10,
   },
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   border_bottom: {
-    borderColor: 'black',
+    borderColor: '#CACACA',
     borderBottomWidth: 1,
     marginLeft: 10,
     width: '90%',

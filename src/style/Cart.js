@@ -46,8 +46,9 @@ const styles = StyleSheet.create({
     paddingLeft: 18,
     fontFamily: 'Poppins',
     fontWeight: '700',
-    fontSize: 15,
+    fontSize:20,
     color: 'black',
+    textTransform: `uppercase`,
   },
   content_counter: {
     paddingTop: 30,
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     paddingHorizontal: 40,
     borderRadius: 20,
-    marginTop: 120,
+    marginTop: 150,
     marginBottom: 20,
   },
   btn_navigateSec: {
@@ -171,17 +172,20 @@ const styles = StyleSheet.create({
     paddingRight: 55,
   },
   text_cupon: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '900',
     fontFamily: 'Poppins',
     color: '#6A4029',
+    width:`100%`,
     marginTop:40,
-    marginBottom:30
+    marginBottom:40,
+    textAlign:`center`
   },
   cupon_container: {
     marginTop: 10,
     justifyContent:'center',
-    flexDirection:'row'
+    flexDirection:'row',
+    // height:60
   },
   content_btn_bottom: {
     height:40
