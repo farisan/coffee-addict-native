@@ -10,11 +10,13 @@ import React, {useState} from 'react';
 import icon_girl from '../assets/register/icon-register.png';
 import ButtonOpacity from '../components/ButtonOpacity';
 import axios from 'axios';
+import {URL} from '@env';
 
 const Register = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
+  // const [loading, setLoading] = useState(false)
 
   const valueEmail = e => {
     setEmail(e), console.log(e);
@@ -28,7 +30,7 @@ const Register = ({navigation}) => {
 
   const handleRegister = () => {
     return axios
-      .post(`https://coffeeadictbe.vercel.app/coffee/users`, {
+      .post(`${URL}/users`, {
         email: email,
         passwords: password,
         phone_number: phone,
@@ -77,23 +79,23 @@ const Register = ({navigation}) => {
           onChangeText={valuePhone}
           placeholderTextColor="#9F9F9F"
         />
-          <ButtonOpacity
-            color={'#6a4029'}
-            text="Create New Account"
-            radius={20}
-            colorText="white"
-            height={60}
-            width={`90%`}
-            marginBottom={20}
-            marginTop={20}
-            // onPress={postRegister}
-            onPressHandler={{
-              onPress: handleRegister,
-              // onPressIn: () => console.log('Pressed In'),
-              // onPressOut: () => console.log('Pressed Out'),
-              // onLongPress: () => navigation.popToTop(),
-            }}
-          />
+        <ButtonOpacity
+          color={'#6a4029'}
+          text="Create New Account"
+          radius={20}
+          colorText="white"
+          height={60}
+          width={`90%`}
+          marginBottom={20}
+          marginTop={20}
+          // onPress={postRegister}
+          onPressHandler={{
+            onPress: handleRegister,
+            // onPressIn: () => console.log('Pressed In'),
+            // onPressOut: () => console.log('Pressed Out'),
+            // onLongPress: () => navigation.popToTop(),
+          }}
+        />
       </View>
     </ScrollView>
   );
@@ -112,22 +114,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginVertical: 20,
   },
-  input: {
-    borderBottomWidth: 1,
-    borderColor:`#9F9F9F`,
-    borderWidth: 0,
-    fontFamily: 'Poppins',
-    fontSize: 14,
-    height: 40,
-    margin: 12,
-    outlineWidth: 4,
-    padding: 10,
-    width: `90%`,
-    color: 'black',
-  },
   input1: {
     borderBottomWidth: 1,
-    borderColor:`#9F9F9F`,
+    borderColor: `#9F9F9F`,
     borderWidth: 0,
     fontFamily: 'Poppins',
     fontSize: 14,
@@ -137,6 +126,20 @@ const styles = StyleSheet.create({
     padding: 10,
     width: `90%`,
     color: 'black',
-    marginBottom:90
+    marginBottom: 90,
   },
+  input: {
+    borderBottomWidth: 1,
+    borderColor: `#9F9F9F`,
+    borderWidth: 0,
+    fontFamily: 'Poppins',
+    fontSize: 14,
+    height: 40,
+    margin: 12,
+    outlineWidth: 4,
+    padding: 10,
+    width: `90%`,
+    color: 'black',
+  },
+
 });

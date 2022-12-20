@@ -4,10 +4,7 @@ import React from 'react';
 import icon_girl from '../assets/get_start/icon_girl.png';
 import ButtonOpacity from '../components/ButtonOpacity';
 
-
 const Get_Start = ({navigation}) => {
-
-
   return (
     <ScrollView>
       <View style={styles.content_all}>
@@ -30,7 +27,6 @@ const Get_Start = ({navigation}) => {
             onPress: () => navigation.navigate('Register'),
             onPressIn: () => console.log('Pressed In'),
             onPressOut: () => console.log('Pressed Out'),
-            onLongPress: () => navigation.popToTop(),
           }}
         />
         <ButtonOpacity
@@ -45,7 +41,6 @@ const Get_Start = ({navigation}) => {
             onPress: () => navigation.navigate('Login'),
             onPressIn: () => console.log('Pressed In'),
             onPressOut: () => console.log('Pressed Out'),
-            onLongPress: () => navigation.popToTop(),
           }}
         />
       </View>

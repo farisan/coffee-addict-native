@@ -1,17 +1,26 @@
-import {View, Text, Image, TextInput, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  Button,
+  ActivityIndicator,
+} from 'react-native';
+import React, { useState} from 'react';
 import Header from '../components/Header';
 import {ScrollView} from 'react-native-gesture-handler';
 import styles from '../style/Home';
 import search_icon from '../assets/header/search.png';
 import CardProduct from '../components/CardProduct';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import authAction from '../redux/actions/auth';
+import ArrowRightSec from 'react-native-vector-icons/AntDesign';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {URL} from '@env';
 
-const Home = ({navigation}) => {
-
-  const dispatch = useDispatch()
+const Home = () => {
+  const navigation = useNavigation();
   const [search, setSearch] = useState('');
   const [navFav, setNavFav] = useState(false);
   const [navCoff, setNavCoff] = useState(true);
@@ -22,9 +31,24 @@ const Home = ({navigation}) => {
   const [sort, setSort] = useState('favorite');
   const [product, setProduct] = useState([]);
   const [notfound, setNotfound] = useState('');
+  const [showadmin, setShowadmin] = useState(true);
+  const [loading, setLoading] = useState(true);
 
+  const profile = useSelector(state => state.auth.profile);
   const valueSearch = e => {
-    setSearch(e), console.log(e);
+    setNavFav(true),
+      setNavCoff(true),
+      setNavNonCoff(true),
+      setNavadd(true),
+      setFood(true),
+      setCategory(''),
+      setSort(''),
+      setSearch(e),
+      console.log(e);
+  };
+
+  const handleshowAdmin = () => {
+    setShowadmin(!showadmin);
   };
 
   // link active
@@ -35,7 +59,8 @@ const Home = ({navigation}) => {
       setNavadd(true),
       setFood(true),
       setCategory('favorite'),
-      setSort('favorite');
+      setSort('favorite'),
+      setSearch('')
   };
   const navActive2 = () => {
     setNavCoff(false),
@@ -44,8 +69,8 @@ const Home = ({navigation}) => {
       setNavadd(true),
       setFood(true),
       setCategory('coffee'),
-      setSort();
-    setSearch(search);
+      setSort('cheapest');
+    setSearch('');
   };
   const navActive3 = () => {
     setNavNonCoff(false),
@@ -55,7 +80,7 @@ const Home = ({navigation}) => {
       setFood(true),
       setCategory('non_coffee'),
       setSort();
-    setSearch(search);
+    setSearch('');
   };
   const navActive4 = () => {
     setNavadd(false),
@@ -65,7 +90,7 @@ const Home = ({navigation}) => {
       setFood(true),
       setCategory('addon');
     setSort();
-    setSearch(search);
+    setSearch('');
   };
   const navActive5 = () => {
     setFood(false),
@@ -75,50 +100,39 @@ const Home = ({navigation}) => {
       setNavNonCoff(true),
       setCategory('foods'),
       setSort();
-    setSearch(search);
+    setSearch('');
   };
 
-  useEffect(() => {
-    axios
-      .get(
-        `https://coffeeadictbe.vercel.app/coffee/product?category=${category}&sorting=${sort}&page=1&limit=10&name_product=${search}`,
-      )
-      .then(res => {
-        setProduct(res.data.result.data), setNotfound(search);
-        console.log('data ke get');
-      })
-      .catch(err => {
-        setNotfound(err.response.data.msg);
-        // console.log(err.response.data.msg)
-      });
-  }, [category, search]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setTimeout(() => {
+        // console.log(category, sort, search);
+        setLoading(true)
+        axios
+          .get(
+            `${URL}/product?category=${category}&sorting=${sort}&page=1&limit=10&name_product=${search}`,
+          )
+          .then(res => {
+            console.log(res.data);
+            setLoading(false)
+            setProduct(res.data.result.data), setNotfound(search);
+          })
+          .catch(err => {
+            setNotfound(err.response.data.msg);
+            setLoading(false)
+          });
+      }, 1000);
+      return () => {
+        setProduct([])
+      };
+    }, [category,search]),
+  );
 
 
-  const resetReduxTransactions = () => {
-    dispatch(
-      authAction.productThunk(
-        {
-          id_product: null,
-          price: 0,
-          name_product: null,
-          status: null,
-          delivery: null,
-          total: 0,
-          image: null,
-          qty: 0,
-          payment_method: null,
-          size: null,
-          id_promo: null
-        },
-      ),
-    );
-  };
-
-  useEffect(() => {
-    resetReduxTransactions()
-  },[])
-
-
+  // console.log(search)
+  // console.log(category)
+  // console.log(notfound)
   return (
     <ScrollView>
       <View style={styles.home_background}>
@@ -139,6 +153,7 @@ const Home = ({navigation}) => {
                 style={styles.input_search}
                 placeholder="Search"
                 onChangeText={valueSearch}
+                value={search}
                 placeholderTextColor="#9F9F9F"
               />
             </View>
@@ -194,7 +209,7 @@ const Home = ({navigation}) => {
               </Text>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.push('See_All', {
+                  navigation.navigate('See_All', {
                     category: category,
                     sort: sort,
                   });
@@ -211,10 +226,18 @@ const Home = ({navigation}) => {
                 {/* product.length < 0 || notfound !== "Product Not Found" ? (<Text>Not Found Product</Text>) : */}
                 {notfound === 'Product Not Found' ? (
                   <Text>Not Found Product</Text>
+                ) : loading ? (
+                  <View style={styles.load}>
+                    <ActivityIndicator
+                      style={styles.loading_style}
+                      size="large"
+                      color="#0000ff"
+                    />
+                  </View>
                 ) : (
-                  product.map(e => (
+                  product.map((e, index) => (
                     <CardProduct
-                      key={e.id}
+                      key={index}
                       id={e.id}
                       name={e.name}
                       image_product={e.image}
@@ -228,6 +251,51 @@ const Home = ({navigation}) => {
           </ScrollView>
         </View>
       </View>
+
+      {profile.role === 'admin' ? (
+        <View styles={styles.container_admin_button_add}>
+          <View style={styles.content_admin_button}>
+            <View style={styles.button_plus}>
+              <TouchableOpacity
+                onPress={handleshowAdmin}
+                style={styles.button_container_admin}>
+                <ArrowRightSec
+                  style={styles.icon_plus_admin}
+                  brand={'AntDesign'}
+                  name="pluscircle"
+                  size={30}
+                  type="material"
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={showadmin ? styles.admin_add_Dnone : styles.admin_add}>
+              <View style={styles.newproduct_admin}>
+                <Button
+                  color="#FFBA33"
+                  title="New product"
+                  onPress={() => navigation.navigate('NewProduct')}
+                />
+              </View>
+              <View style={styles.promo_content}>
+                <View style={styles.newproduct_admin1}>
+                  <Button
+                    color="#FFBA33"
+                    title="New Promo"
+                    onPress={() => navigation.navigate('New_Promo')}
+                  />
+                </View>
+                <View style={styles.newproduct_admin2}>
+                  <Button
+                    color="#FFBA33"
+                    title="Edit Promo"
+                    onPress={() => navigation.navigate('Cupon_Admin')}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      ) : null}
     </ScrollView>
   );
 };

@@ -6,63 +6,45 @@ import {
   ToastAndroid,
   ActivityIndicator,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import styles from '../style/Cupon';
 import icon_search from '../assets/cupon/icon_search.png';
-import CardCupon from '../components/CardCupon';
-import {useSelector} from 'react-redux';
+import CardCupon from '../components/CardCouponAdmin';
 import axios from 'axios';
+import {useFocusEffect} from '@react-navigation/native';
 import {URL} from '@env';
-// import {useNavigation} from '@react-navigation/core';
-// import authAction from '../redux/actions/auth';
 
-const Cupon = () => {
-  // const navigation = useNavigation();
-  const product = useSelector(state => state.auth.product);
-  // const dispatch = useDispatch();
-
+const Cupon_Admin = () => {
   const [promo, setPromo] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // const backActionHandler = () => {
-  //   navigation.navigate('Cart');
-  //   return true;
-  // };
+  
 
-  // useEffect(() => {
-  //   // Add event listener for hardware back button press on Android
-  //   BackHandler.addEventListener('hardwareBackPress', backActionHandler);
+  useFocusEffect(
+    React.useCallback(() => {
+        setLoading(true);
+        axios
+          .get(`${URL}/promo/Getpromo`)
+          .then(res => {
+            setPromo(res.data.result);
+            // console.log(res.data.result)
+            setLoading(false);
+            console.log("selesai")
+          })
+          .catch(err => {
+            console.log(err)
+            ToastAndroid.showWithGravity(
+              err.response.data.msg,
+              ToastAndroid.LONG,
+              ToastAndroid.TOP,
+            );
+            setLoading(false);
+          });
 
-  //   return () =>
-  //     // clear/remove event listener
-  //     BackHandler.removeEventListener('hardwareBackPress', backActionHandler);
-  // }, []);
-
-  const handleGetPromo = () => {
-    setLoading(true);
-    axios
-      .get(
-        `${URL}/promo/?product_id=${product.id_product}`,
-      )
-      .then(res => {
-        setPromo(res.data.result)
-        console.log(res.data.result)
-        ,setLoading(false);
-      })
-      .catch(err => {
-        ToastAndroid.showWithGravity(
-          err.response.data.msg,
-          ToastAndroid.LONG,
-          ToastAndroid.TOP,
-        );
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    handleGetPromo();
-  }, []);
+      return () => {setPromo([]),console.log("clear")};
+    }, [])
+  );
 
   return (
     <ScrollView>
@@ -77,7 +59,7 @@ const Cupon = () => {
             />
           </View>
         </View>
-        <Text style={styles.text_claim}>Claim coupons by clicking it</Text>
+        <Text style={styles.text_claim}>Click to edit promo</Text>
         {loading ? (
           <View style={{marginVertical: 120}}>
             <ActivityIndicator
@@ -88,12 +70,13 @@ const Cupon = () => {
           </View>
         ) : (
           <View style={styles.content_card}>
-            {promo[0] ? (
+            {promo ? (
               promo.map((e, index) => (
                 <CardCupon
                   key={e.id}
-                  promo={promo[index].id}
+                  id={promo[index].id}
                   image_product={promo[index].image}
+                  promo={promo[index].id}
                   name_product={promo[index].name}
                   code={promo[index].code}
                   hex_color={promo[index].hex_color}
@@ -112,4 +95,4 @@ const Cupon = () => {
   );
 };
 
-export default Cupon;
+export default Cupon_Admin;

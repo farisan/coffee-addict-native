@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
@@ -21,40 +21,55 @@ import {
   NativeBaseProvider,
   Select,
 } from 'native-base';
-import {addProduct} from '../utils/axios';
+import {editProduct} from '../utils/axios';
 import camera_default from '../assets/add/camera.png';
-import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
+import {URL} from '@env';
+// import {useNavigation} from '@react-navigation/native';
 
-function NewProduct() {
-  const navigation = useNavigation();
+function Edit_Product({route, navigation}) {
+  const {id_product} = route.params;
 
-  const [filePath, setFilePath] = useState(null);
+  const [filePath, setFilePath] = useState(
+    null,
+  );
   const [image, setImage] = useState(null);
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [size, setSize] = useState('');
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState(0);
   const [stock, setStock] = useState('');
   const [description, setDescription] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   // const [choosePhoto, setChoosePhoto] = useState(false);
 
+  useEffect(() => {
+    // const random = () => {return (Math.random() * 1000000)}
+    // const {id_product} = route.params;
+    console.log(id_product);
+    axios
+      .get(`${URL}/product/${id_product}`)
+      .then(res => {
+        setFilePath(res.data.result.data[0].image);
+        setCategory(res.data.result.data[0].category);
+        setSize(res.data.result.data[0].size);
+        setPrice(res.data.result.data[0].price);
+        setStock(res.data.result.data[0].stock);
+        // setId_product(res.data.result.data[0].product_id)
+        // setPromoID(res.data.result.data[0].id);
+        console.log(res.data.result.data[0]);
+        setDescription(res.data.result.data[0].description);
+        setName(res.data.result.data[0].name);
+        // setDeps(deps + 1)
+      })
+      .catch(err => {
+        console.log(err.response);
+      });
+  }, [id_product]);
+
   const show = () => {
     setShowModal(true);
-  };
-
-  const returnInitial = () => {
-    setFilePath(
-      '',
-    ),
-      setImage(null),
-      setName(''),
-      setCategory(''),
-      setSize(''),
-      setPrice(''),
-      setStock(''),
-      setDescription('');
   };
 
   const camera = () => {
@@ -98,30 +113,31 @@ function NewProduct() {
     });
   };
 
+  console.log(price);
+
   const saveHandle = async () => {
     try {
       const getToken = await AsyncStorage.getItem('token');
       const formData = new FormData();
-      formData.append('name', name);
-      formData.append('category', category);
-      formData.append('size', size);
-      formData.append('price', price);
-      formData.append('stock', stock);
-      formData.append('description', description);
-      formData.append('image', {
+      if (name) formData.append('name', name);
+      if (category) formData.append('category', category);
+      if (size) formData.append('size', size);
+      if (price) formData.append('price', price);
+      if (stock) formData.append('stock', stock);
+      if (description) formData.append('description', description);
+      if (image) formData.append('image', {
         name: image[0].fileName,
         type: image[0].type,
         uri: image[0].uri,
       });
-      await addProduct(getToken, formData);
-      await returnInitial();
+      await editProduct(getToken, formData, id_product);
       ToastAndroid.showWithGravity(
-        'Success add product',
+        'Edit Success',
         ToastAndroid.LONG,
         ToastAndroid.TOP,
       );
 
-      navigation.navigate('Home');
+      navigation.navigate('MainScreen');
     } catch (error) {
       console.log(error);
       ToastAndroid.showWithGravity(
@@ -218,7 +234,7 @@ function NewProduct() {
             <Image source={filePath !== null ? {uri: filePath} : camera_default} style={styles.image} />
             <ButtonOpacity
               color={'#000000'}
-              text="Add picture"
+              text="Change picture"
               radius={13}
               colorText="white"
               height={40}
@@ -240,12 +256,12 @@ function NewProduct() {
               keyboardType="none"
               placeholderTextColor="#9F9F9F"
               onChangeText={e => {
-                setName(e), console.log(e);
+                setName(e);
               }}
             />
             <TextInput
               style={styles.input}
-              placeholder="Type product price"
+              placeholder={`${price}`}
               value={price}
               keyboardType="numeric"
               placeholderTextColor="#9F9F9F"
@@ -308,7 +324,7 @@ function NewProduct() {
             <TextInput
               style={styles.input_bottom}
               value={stock}
-              placeholder="input stock"
+              placeholder={`${stock}`}
               keyboardType="numeric"
               placeholderTextColor="#9F9F9F"
               onChangeText={e => {
@@ -317,7 +333,7 @@ function NewProduct() {
             />
             <Text style={styles.text}>Description</Text>
             <TextInput
-              style={styles.input_bottom}
+              style={[styles.input_bottom,{width:280}]}
               value={description}
               placeholder="Describe your product min. 150 characters"
               keyboardType="none"
@@ -329,7 +345,7 @@ function NewProduct() {
           </View>
           <ButtonOpacity
             color={'#6A4029'}
-            text="save"
+            text="Save"
             radius={20}
             colorText="white"
             height={70}
@@ -339,7 +355,7 @@ function NewProduct() {
             // onPress={postRegister}
             onPressHandler={{
               onPress: () => {
-                setShowAdd(true), console.log(showAdd);
+                setShowAdd(true);
               },
               // onPressIn: () => console.log('Pressed In'),
               // onPressOut: () => console.log('Pressed Out'),
@@ -352,4 +368,4 @@ function NewProduct() {
   );
 }
 
-export default NewProduct;
+export default Edit_Product;

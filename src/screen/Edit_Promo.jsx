@@ -15,13 +15,14 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import camera_default from '../assets/add/camera.png';
 import {Box, CheckIcon, Select} from 'native-base';
 import axios from 'axios';
-import { createPromo } from '../utils/axios';
+import {editPromo} from '../utils/axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import {URL} from '@env';
 
-function New_Promo() {
+function Edit_Promo_Admin({route}) {
 
+  const {id_promo} = route.params;
   const navigation = useNavigation()
 
   const [modals, setModals] = useState(false);
@@ -32,25 +33,24 @@ function New_Promo() {
   const [disc, setDisc] = useState('');
   const [hex, setHex] = useState('');
   const [image, setImage] = useState('');
+  // const [id_product, setId_product] = useState(null)
+  const [promoID, setPromoID] = useState(null)
+  const [nameproduct, setNameproduct] = useState('')
   const [display, setDisplay] = useState(null);
-  const [product, setProduct] = useState([]);
-  const [idProduct, setIdproduct] = useState('')
-  const [nameProduct, setNameProduct] = useState('')
-  const [selectedProduct, setSelectedProduct] = useState([])
+  // const [deps, setDeps] = useState(0)
+  
 
   const handleShowedit = () => {
     setModals(!modals);
   };
 
   const handleShowCard = () => {
-    if(!display || !product || !code || !disc || !hex || !valid) return (
+    if(!display || !code || !disc || !hex || !valid) return (
       ToastAndroid.showWithGravity(
       'Please input promo first to preview coupon',
       ToastAndroid.LONG,
       ToastAndroid.TOP,
     ))
-    setIdproduct(selectedProduct[0])
-    setNameProduct(selectedProduct[1])
     setModalsCard(!modalsCard);
   };
 
@@ -122,44 +122,57 @@ function New_Promo() {
     });
   };
 
-  useEffect(() => {
-    axios
-      .get(`${URL}/product`)
-      .then(res => {
-        setProduct(res.data.result.data);
-      })
+  
+  
 
+  useEffect(() => {
+    // const random = () => {return (Math.random() * 1000000)}
+    // const {id_promo} = route.params;
+    console.log(id_promo)
+    axios
+      .get(`${URL}/promo/promo/${id_promo}`)
+      .then(res => {
+        setDisplay(res.data.result.data[0].image)
+        setCode(res.data.result.data[0].code)
+        setDisc(res.data.result.data[0].discount)
+        setHex(res.data.result.data[0].hex_color)
+        setValid((res.data.result.data[0].valid).slice(0,10))
+        // setId_product(res.data.result.data[0].product_id)
+        setPromoID(res.data.result.data[0].id)
+        setNameproduct(res.data.result.data[0].name)
+        // setDeps(deps + 1)
+      })
       .catch(err => {
         console.log(err.response);
       });
-  }, []);
+  },[id_promo]);
 
 
   const handleCreatePromo = async () => {
     try {
       const getToken = await AsyncStorage.getItem('token')
       const formData = new FormData()
-      formData.append('product_id', idProduct);
-      formData.append('code', code.toUpperCase());
-      formData.append('discount', disc);
-      formData.append('valid', valid);
-      formData.append('color', hex);
-      formData.append('image', {
+      if(code) formData.append('code', code.toUpperCase());
+      if(disc) formData.append('discount', disc);
+      if(valid) formData.append('valid', valid);
+      if(hex) formData.append('hex_color', hex);
+      if(image) formData.append('image', {
         name: image[0].fileName,
         type: image[0].type,
         uri: image[0].uri,
       });
-      await createPromo(getToken, formData)
+      await editPromo(getToken, formData, promoID)
+      console.log("clear axios")
       ToastAndroid.showWithGravity(
-        'Success add product',
+        'Success edit promo',
         ToastAndroid.LONG,
         ToastAndroid.TOP,
       )
-      navigation.navigate('Home')
+      navigation.navigate('Cupon_Admin')
     } catch (error) {
-      console.log(error.response)
+      console.log(error.response, "error")
       ToastAndroid.showWithGravity(
-        'internal server error',
+        error.response.data.msg,
         ToastAndroid.LONG,
         ToastAndroid.TOP,
       )
@@ -194,33 +207,9 @@ function New_Promo() {
             />
           </View>
           <View style={styles.container_promo_input}>
-            <Text style={styles.text}>Product</Text>
-            <Box maxW="100%">
-              <Select
-                // selectedValue={selectedProduct[1]}
-                minWidth="200"
-                marginTop={5}
-                marginBottom={5}
-                accessibilityLabel="Choose Product"
-                placeholder={selectedProduct[1] ? `${selectedProduct[1]}` : "Choose product"}
-                placeholderTextColor={selectedProduct[1] ? `black` : `#BABABA`}
-                _selectedItem={{
-                  bg: 'teal.600',
-                  endIcon: <CheckIcon size="5" />,
-                }}
-                mt={1}
-                
-                onValueChange={itemValue => setSelectedProduct(itemValue)}>
-                {product.map((e, index) => (
-                  <Select.Item
-                    key={index}
-                    // onPress={() => {handleProductId(index)}}
-                    label={`${index + 1}. ${product[index].name}`}
-                    value={[product[index].id, product[index].name]}
-                  />
-                ))}
-              </Select>
-            </Box>
+          <Text style={styles.text}>Name Product</Text>
+            <Text style={{marginTop:15, marginBottom:5, fontSize:12, color:`black`, fontStyle:`Poppins`}}>{nameproduct}</Text>
+            <Text style={{borderBottomWidth:1,marginBottom:20, borderColor:`#BABABA`}}></Text>
             <Text style={styles.text}>Code</Text>
             <TextInput
               style={styles.input_bottom}
@@ -235,13 +224,13 @@ function New_Promo() {
             <Text style={styles.text}>Discount ( % )</Text>
             <TextInput
               style={styles.input_bottom}
-              placeholder="Input the discount you'll use for the promo"
+              placeholder={`${disc}`}
               keyboardType="numeric"
               value={disc}
               onChangeText={e => {
                 setDisc(e), console.log(e);
               }}
-              placeholderTextColor="#9F9F9F"
+              placeholderTextColor="black"
             />
             <Text style={styles.text}>Background Card Promo</Text>
             <Box maxW="100%">
@@ -257,7 +246,7 @@ function New_Promo() {
                   endIcon: <CheckIcon size="5" />,
                 }}
                 mt={1}
-                onValueChange={itemValue => setHex(itemValue)}>
+                onValueChange={itemValue => {setHex(itemValue),console.log(itemValue)}}>
                 <Select.Item label="Yellow" value="#F5C361" />
                 <Select.Item label="Green" value="#88B788" />
                 <Select.Item label="Peach" value="#C59378" />
@@ -372,7 +361,7 @@ function New_Promo() {
                 <View style={styles.preview_right}>
                   <Text style={styles.title_1}>{code}</Text>
                   <Text style={styles.title_2}>Discount: {disc}%</Text>
-                  <Text style={styles.title_3}>{nameProduct}</Text>
+                  <Text style={styles.title_3}>{nameproduct}</Text>
                 </View>
               </View>
             </Modal.Body>
@@ -404,4 +393,4 @@ function New_Promo() {
   );
 }
 
-export default New_Promo;
+export default Edit_Promo_Admin;
