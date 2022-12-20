@@ -264,7 +264,7 @@ function Edit_Product({route, navigation}) {
               placeholder={`${price}`}
               value={price}
               keyboardType="numeric"
-              placeholderTextColor="#9F9F9F"
+              placeholderTextColor="black"
               onChangeText={e => {
                 setPrice(e), console.log(e);
               }}
@@ -272,12 +272,12 @@ function Edit_Product({route, navigation}) {
           </View>
           <View>
             <Text style={styles.text}>input category</Text>
-            <View>
-              <Center>
-                <Box maxW="300">
+            <View style={{width:`75%`}}>
+              <Center style={{paddingTop:10}}>
+                <Box maxW={"100%"}>
                   <Select
                     selectedValue={category}
-                    minWidth="2xs"
+                    minWidth="100%"
                     accessibilityLabel="set category"
                     placeholder="set category"
                     _selectedItem={{
@@ -295,14 +295,13 @@ function Edit_Product({route, navigation}) {
                   </Select>
                 </Box>
               </Center>
-            </View>
             <Text style={styles.text}>Input size</Text>
-            <View style={{width: '90%'}}>
-              <Center>
-                <Box maxW="300">
+            <View style={{width: '100%'}}>
+              <Center style={{paddingTop:10}}>
+                <Box maxW="100%">
                   <Select
                     selectedValue={size}
-                    minWidth="2xs"
+                    minWidth="100%"
                     accessibilityLabel="set size"
                     placeholder="set size"
                     _selectedItem={{
@@ -320,13 +319,14 @@ function Edit_Product({route, navigation}) {
                 </Box>
               </Center>
             </View>
+            </View>
             <Text style={styles.text}>Stock</Text>
             <TextInput
               style={styles.input_bottom}
               value={stock}
               placeholder={`${stock}`}
               keyboardType="numeric"
-              placeholderTextColor="#9F9F9F"
+              placeholderTextColor="black"
               onChangeText={e => {
                 setStock(e), console.log(e);
               }}
@@ -348,7 +348,7 @@ function Edit_Product({route, navigation}) {
             text="Save"
             radius={20}
             colorText="white"
-            height={70}
+            height={50}
             width={'70%'}
             marginBottom={10}
             marginTop={20}
