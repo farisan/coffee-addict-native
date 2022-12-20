@@ -5,6 +5,7 @@ import {
   Image,
   ScrollView,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
 import icon_girl from '../assets/register/icon-register.png';
@@ -16,7 +17,7 @@ const Register = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
-  // const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const valueEmail = e => {
     setEmail(e), console.log(e);
@@ -29,6 +30,14 @@ const Register = ({navigation}) => {
   };
 
   const handleRegister = () => {
+    setLoading(true);
+    if(!email || !password || !phone) return (
+      setLoading(false),
+      ToastAndroid.showWithGravity(
+      "input must be fulfilled",
+      ToastAndroid.LONG,
+      ToastAndroid.TOP,
+    ))
     return axios
       .post(`${URL}/users`, {
         email: email,
@@ -42,6 +51,7 @@ const Register = ({navigation}) => {
           ToastAndroid.TOP,
         ),
           navigation.push('Login');
+        setLoading(false);
       })
       .catch(err => {
         ToastAndroid.showWithGravity(
@@ -49,6 +59,7 @@ const Register = ({navigation}) => {
           ToastAndroid.LONG,
           ToastAndroid.TOP,
         );
+        setLoading(false);
       });
   };
 
@@ -79,23 +90,33 @@ const Register = ({navigation}) => {
           onChangeText={valuePhone}
           placeholderTextColor="#9F9F9F"
         />
-        <ButtonOpacity
-          color={'#6a4029'}
-          text="Create New Account"
-          radius={20}
-          colorText="white"
-          height={60}
-          width={`90%`}
-          marginBottom={20}
-          marginTop={20}
-          // onPress={postRegister}
-          onPressHandler={{
-            onPress: handleRegister,
-            // onPressIn: () => console.log('Pressed In'),
-            // onPressOut: () => console.log('Pressed Out'),
-            // onLongPress: () => navigation.popToTop(),
-          }}
-        />
+        {loading ? (
+          <View style={{marginHorizontal: 100, marginVertical: 32}}>
+            <ActivityIndicator
+              style={styles.loading_style}
+              size="large"
+              color="#0000ff"
+            />
+          </View>
+        ) : (
+          <ButtonOpacity
+            color={'#6a4029'}
+            text="Create New Account"
+            radius={20}
+            colorText="white"
+            height={60}
+            width={`90%`}
+            marginBottom={20}
+            marginTop={20}
+            // onPress={postRegister}
+            onPressHandler={{
+              onPress: handleRegister,
+              // onPressIn: () => console.log('Pressed In'),
+              // onPressOut: () => console.log('Pressed Out'),
+              // onLongPress: () => navigation.popToTop(),
+            }}
+          />
+        )}
       </View>
     </ScrollView>
   );
@@ -141,5 +162,4 @@ const styles = StyleSheet.create({
     width: `90%`,
     color: 'black',
   },
-
 });
