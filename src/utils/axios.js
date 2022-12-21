@@ -128,6 +128,7 @@ export const Resetpassword = (token, body) => {
 export const editProfile = (token, body) => {
   return axios.patch(`${getURL}/users/profile`, body, {
     headers: {
+      'Content-Type' : 'multipart/form-data',
       'x-access-token': token,
     },
   });
@@ -137,6 +138,7 @@ export const editProfile = (token, body) => {
 export const addProduct = (token, body) => {
   return axios.post(`${getURL}/product`, body, {
     headers: {
+      'Content-Type' : 'multipart/form-data',
       'x-access-token': token,
     },
   });
@@ -146,6 +148,7 @@ export const addProduct = (token, body) => {
 export const createPromo = (token, body) => {
   return axios.post(`${getURL}/promo`, body, {
     headers: {
+      'Content-Type' : 'multipart/form-data',
       'x-access-token': token,
     },
   });
@@ -158,6 +161,7 @@ export const editPromo = (token, body, params) => {
     body,
     {
       headers: {
+        'Content-Type' : 'multipart/form-data',
         'x-access-token': token,
       },
     },
@@ -169,6 +173,32 @@ export const editProduct = (token, body, params) => {
   return axios.patch(
     `${URL}/product/${params}`,
     body,
+    {
+      headers: {
+        'Content-Type' : 'multipart/form-data',
+        'x-access-token': token,
+      },
+    },
+  );
+};
+
+
+// Axios Delete product
+export const deleteProduct = (token, id) => {
+  return axios.delete(
+    `${URL}/product/${id}`,
+    {
+      headers: {
+        'x-access-token': token,
+      },
+    },
+  );
+};
+
+// Axios Delete product
+export const deletePromo = (token, id) => {
+  return axios.delete(
+    `${URL}/promo/${id}`,
     {
       headers: {
         'x-access-token': token,
