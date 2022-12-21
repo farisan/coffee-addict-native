@@ -82,11 +82,7 @@ function See_All({route}) {
 
   useFocusEffect(
     React.useCallback(() => {
-        handleaxios(
-          `${URL}/product?category=${
-            category === 'favorite' ? '' : `${category}`
-          }&sorting=${sorting}&page=1&limit=4`,
-        );      
+        handleaxios(`${URL}/product?category=${category === 'favorite' ? '' : `${category}`}&sorting=${sorting}&page=1&limit=4`);      
       return () => {
         setProduct([]);
       };

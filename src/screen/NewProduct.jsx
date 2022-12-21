@@ -33,7 +33,7 @@ function NewProduct() {
   const [name, setName] = useState('');
   const [category, setCategory] = useState('');
   const [size, setSize] = useState('');
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState(0);
   const [stock, setStock] = useState('');
   const [description, setDescription] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -129,6 +129,8 @@ function NewProduct() {
       );
     }
   };
+
+
 
   return (
     <>
@@ -247,8 +249,8 @@ function NewProduct() {
               value={price}
               keyboardType="numeric"
               placeholderTextColor="black"
-              onChangeText={e => {
-                setPrice(e), console.log(e);
+              onChangeText={e=> {
+                setPrice(e)
               }}
             />
           <View style={{width:`90%`}}>

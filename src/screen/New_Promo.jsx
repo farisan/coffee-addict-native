@@ -27,7 +27,7 @@ function New_Promo() {
   const [modals, setModals] = useState(false);
   const [modalsCard, setModalsCard] = useState(false);
   const [show, setShow] = useState(false);
-  const [valid, setValid] = useState('');
+  const [valid, setValid] = useState(new Date());
   const [code, setCode] = useState('');
   const [disc, setDisc] = useState('');
   const [hex, setHex] = useState('');
@@ -37,6 +37,7 @@ function New_Promo() {
   const [idProduct, setIdproduct] = useState('')
   const [nameProduct, setNameProduct] = useState('')
   const [selectedProduct, setSelectedProduct] = useState([])
+  const [day, setDay] = useState()
 
   const handleShowedit = () => {
     setModals(!modals);
@@ -55,9 +56,8 @@ function New_Promo() {
   };
 
   const dateHandle = (event, value) => {
-    setValid(
-      value.getFullYear() + '-' + (value.getMonth() + 1)  + '-' + value.getDate(),
-    );
+    setValid(value);
+    setDay(value.getFullYear() + '/' + value.getMonth() + '/' + value.getDate())
     setShow(false);
   };
 
@@ -122,6 +122,7 @@ function New_Promo() {
     });
   };
 
+
   useEffect(() => {
     axios
       .get(`${URL}/product`)
@@ -142,7 +143,7 @@ function New_Promo() {
       formData.append('product_id', idProduct);
       formData.append('code', code.toUpperCase());
       formData.append('discount', disc);
-      formData.append('valid', valid);
+      formData.append('valid', day);
       formData.append('color', hex);
       formData.append('image', {
         name: image[0].fileName,
@@ -269,7 +270,7 @@ function New_Promo() {
               style={styles.input_bottom_valid}
               onPress={() => showMode()}
               keyboardType="none">
-              {valid === '' ? 'input date valid coupon' : valid}
+              {`${valid.getDate()}/${valid.getMonth()}/${valid.getFullYear()}`}
             </Text>
           </View>
           <View>
@@ -292,14 +293,14 @@ function New_Promo() {
           </View>
         </View>
       </ScrollView>
-      {show && (
+      {show ? (
         <DateTimePicker
-          value={new Date()}
+          value={valid}
           mode={'date'}
           display="default"
           onChange={dateHandle}
         />
-      )}
+      ): null}
       <Center>
         <Modal
           isOpen={modals}

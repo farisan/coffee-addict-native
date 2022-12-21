@@ -23,7 +23,7 @@ const CardProduct = props => {
   return (
     <TouchableOpacity
       onPress={() => {
-        navigate.navigate(profile.role === 'user' ? 'ProductDetail' : 'NewProduct', {
+        navigate.navigate(profile.role === 'user' ? 'ProductDetail' : 'Edit_Product', {
           id_product: props.id,
         });
       }}>

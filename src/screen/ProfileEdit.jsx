@@ -41,6 +41,7 @@ const ProfileEdit = () => {
   const [edit, setEdit] = useState(false);
   const [deps, setDeps] = useState('');
   const [loading, setLoading] = useState(false);
+  const [day, setDay] = useState(new Date())
 
   const getProfile = async () => {
     try {
@@ -56,8 +57,9 @@ const ProfileEdit = () => {
   }, [deps]);
 
   const dateHandle = (event, value) => {
+    setDay(value)
     setBirthday(
-      value.getFullYear() + '/' + value.getMonth() + '/' + value.getDate(),
+      value.getFullYear() + '-' + value.getMonth() + '-' + value.getDate(),
     );
     setShow(false);
   };
@@ -166,7 +168,7 @@ const ProfileEdit = () => {
       <ScrollView>
         {show && (
           <DateTimePicker
-            value={new Date()}
+            value={day}
             mode={'date'}
             display="default"
             onChange={dateHandle}
