@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   all_container: {
     marginLeft: '10%',
     width: '80%',
-    marginTop: '20%',
+    marginTop: 30,
   },
   container_up: {
     alignItems: 'center',
