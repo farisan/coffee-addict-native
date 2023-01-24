@@ -25,6 +25,11 @@
 
 - Click [`here`](https://drive.google.com/drive/folders/1kZQs4KSU37UtC6ZTb-AosY0LjUWGsNy9?usp=sharing)
 
+<h2>APK</h2>
+<hr>
+
+- Click apk [`here`](https://bit.ly/3Wub74t)
+
 <h2>Related Project</h2>
 <hr>
 
