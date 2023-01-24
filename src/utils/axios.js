@@ -185,8 +185,8 @@ export const editProduct = (token, body, params) => {
 
 // Axios Delete product
 export const deleteProduct = (token, id) => {
-  return axios.delete(
-    `${URL}/product/${id}`,
+  return axios.patch(
+    `${URL}/product/delete/${id}`, {},
     {
       headers: {
         'x-access-token': token,
@@ -197,8 +197,8 @@ export const deleteProduct = (token, id) => {
 
 // Axios Delete product
 export const deletePromo = (token, id) => {
-  return axios.delete(
-    `${URL}/promo/${id}`,
+  return axios.patch(
+    `${URL}/promo/delete/${id}`, {},
     {
       headers: {
         'x-access-token': token,
