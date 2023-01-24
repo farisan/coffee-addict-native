@@ -28,7 +28,7 @@
 <h2>APK</h2>
 <hr>
 
-- Click apk [`here`](https://bit.ly/3Wub74t)
+- Click apk [`here`](http://bit.ly/3XWclGZ)
 
 <h2>Related Project</h2>
 <hr>
